@@ -1,0 +1,23 @@
+{
+  "name": "nk-mysql",
+  "version": "1.0.0",
+  "description": "Connect MySQL Databases using the same function calls as the NK.db object for MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Encke/NK-MySQL.git"
+  },
+  "author": "Encke Technologies SRL",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Encke/NK-MySQL/issues"
+  },
+  "homepage": "https://github.com/Encke/NK-MySQL#readme",
+  "dependencies": {
+    "mysql": "^2.18.1",
+    "nk-node": "^1.1.7"
+  }
+}
