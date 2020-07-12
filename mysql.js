@@ -28,7 +28,8 @@ const mysqlDBJSObject = {
 			connectionOptions.password = pass
 		}
 		mysqlDBJSObject.databaseList[dbName] = mysql.createConnection( connectionOptions )
-		if( mysqlDBJSObject.databaseList[dbName].connect() )  {
+		mysqlDBJSObject.databaseList[dbName].connect() 
+		if( mysqlDBJSObject.databaseList[dbName] )  {
 			callback( false, null )
 		}	else	{
 			callback( true, 'cannot connect' )
