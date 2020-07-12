@@ -6,6 +6,7 @@ MySQL Connection Class for the NK Node Package
 Install using NPM
 
 ```bash
+echo "registry=https://npm.pkg.github.com/Encke" >> .npmrc
 npm i @encke/nk-mysql --save
 ```
 
@@ -17,7 +18,7 @@ MySQL (MariaDB) is a very popular database system used in many public platforms 
 ```node
 const NKMySQL = require( '@encke/nk-mysql' )
 //                  dbName,         ip,   port, user, pass, timeoutInMS, callback
-NKMySQL.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError, errorMessage ) => {
+NKMySQL.start( 'MyDatabase', '127.0.0.1', 3306, null, null, null, ( isError, errorMessage ) => {
   //Super duper awesome code here!
   console.log( isError, errorMessage )
 })
@@ -27,7 +28,7 @@ The database connection object is saved in the NKMySQL Object, indexed by the da
 ### Start and connect to multiple servers
 ```node
 const NKMySQL = require( 'nk-mongo' )
-NKMySQL.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError1, errorMessage1 ) => NKMySQL.start( 'RemoteDB1', 'remote.mydomain.com', 27017, null, null, null, ( isError2, errorMessage2 ) => NKMySQL.start( 'RemoteDB2', 'remote2.mydomain.com', 27017, null, null, null, ( isError3, errorMessage3 ) => {
+NKMySQL.start( 'MyDatabase', '127.0.0.1', 3306, null, null, null, ( isError1, errorMessage1 ) => NKMySQL.start( 'RemoteDB1', 'remote.mydomain.com', 3306, null, null, null, ( isError2, errorMessage2 ) => NKMySQL.start( 'RemoteDB2', 'remote2.mydomain.com', 3306, null, null, null, ( isError3, errorMessage3 ) => {
   console.log( isError1, errorMessage1, isError2, errorMessage2, isError3, errorMessage3 )
   //WHAT?! Yes, you can connect to multiple servers in the same core, using them as objects for real-time compliances
 })))
@@ -45,7 +46,7 @@ NKMySQL.insert( 'MyDatabase', 'users', { username: 'jose', pass: '123', active: 
 ### Delete rows from the database
 ```node
 //                    dbName, table,     dataToRemove,                      callback
-NKMySQL.delete( 'MyDatabase', 'users', { myuser: NKMySQL.id( user._id ) }, () => console.log( 'all done' ) )
+NKMySQL.delete( 'MyDatabase', 'users', { myuser: user.id }, () => console.log( 'all done' ) )
 ```
 
 ### Update rows in the database
@@ -59,7 +60,7 @@ NKMySQL.update( 'MyDatabase', 'users', { active: false }, { active: true }, () =
 ### Query which should return ONLY ONE ROW
 ```node
 //                        dbName, table,      query,                              callback
-NKMySQL.singleQuery( 'MyDatabase', 'users', { myuser: NKMySQL.id( user._id ) }, rowFromQuery => console.log( rowFromQuery ) )
+NKMySQL.singleQuery( 'MyDatabase', 'users', { myuser: user.id }, rowFromQuery => console.log( rowFromQuery ) )
 ```
 This singleQuery is very useful in the authentication methods, e.g.
 ```node
@@ -87,7 +88,7 @@ NKMySQL.queryLimitSort( 'MyDatabase', 'users', 100, { added: 1 }, { active: true
 ### Run a query to perform only one JOIN to another table
 ```node
 //              dbName,     table, tableIDField, joinTo, joinToIDField, joinedToElement, sortBy, query, callback
-NKMySQL.join( 'MyDatabase', 'users', '_id', 'photos', 'user_id', 'photos', { added: 1 }, { myuser: NKMySQL.id( user._id ) }, rowsFromQuery => console.log( rowsFromQuery ) )
+NKMySQL.join( 'MyDatabase', 'users', '_id', 'photos', 'user_id', 'photos', { added: 1 }, { myuser: user.id }, rowsFromQuery => console.log( rowsFromQuery ) )
 ```
 
 ### Run a query, performing a list of JOINS defined in the query

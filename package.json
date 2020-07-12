@@ -1,5 +1,5 @@
 {
-  "name": "nk-mysql",
+  "name": "@encke/nk-mysql",
   "version": "1.0.0",
   "description": "MySQL (MariaDB) Connection Class for the NK Node Package",
   "main": "mysql.js",
@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/Encke/NK-MySQL#readme",
   "dependencies": {
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "@encke/nk-sql-builder": "1.0.2"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
