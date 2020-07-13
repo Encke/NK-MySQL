@@ -1,7 +1,5 @@
 const mysql		=	require( 'mysql' )
-const NKSQL = require( '@encke/nk-sql-builder' )
-
-NKSQL.setType( 'mysql' )
+const NKSQL = require( '@encke/nk-mysql-builder' )
 
 const mysqlDBJSObject = {
 	db: null,
