@@ -1,6 +1,6 @@
 {
   "name": "@encke/nk-mysql",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "MySQL (MariaDB) Connection Class for the NK Node Package",
   "main": "mysql.js",
   "scripts": {

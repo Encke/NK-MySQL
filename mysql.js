@@ -36,7 +36,7 @@ const mysqlDBJSObject = {
 	insert: ( dbName, table, rowOrRows, callback ) => mysqlDBJSObject.run( dbName, NKSQL.insert( table, rowOrRows ), callback ),
 	delete: ( dbName, table, dataToRemove, callback ) => mysqlDBJSObject.run( dbName, NKSQL.delete( table, dataToRemove ), callback ),
 	update: ( dbName, table, dataToUpdate, newData, callback ) => mysqlDBJSObject.run( dbName, NKSQL.update( table, newData, dataToUpdate ), callback ),
-	singleQuery: ( dbName, table, query, callback ) => mysqlDBJSObject.run( dbName, NKSQL.query( table, 1, {}, query, null ), callback ),
+	singleQuery: ( dbName, table, query, callback ) => mysqlDBJSObject.run( dbName, NKSQL.query( table, 1, {}, query, null ), ( rows ) => callback( ( rows && ( rows.length > 0 ) )? rows[0]: null ) ),
 	query: ( dbName, table, query, callback ) => mysqlDBJSObject.run( dbName, NKSQL.query( table, null, {}, query, null ), callback ),
 	join: ( dbName, table, tableIDField, joinTo, joinToIDField, joinedToElement, sortBy, query, callback ) => mysqlDBJSObject.run( dbName, NKSQL.query( table, null, sortBy, query, [ { from: joinTo, field: tableIDField, fromField: joinToIDField, name: joinedToElement } ] ), callback ),
 	joinsLimit: ( dbName, table, joins, max, sortBy, query, callback ) => mysqlDBJSObject.run( dbName, NKSQL.query( table, max, sortBy, query, joins ), callback ),
