@@ -26,11 +26,14 @@ const mysqlDBJSObject = {
 			connectionOptions.password = pass
 		}
 		mysqlDBJSObject.databaseList[dbName] = mysql.createConnection( connectionOptions )
-		mysqlDBJSObject.databaseList[dbName].connect() 
-		if( mysqlDBJSObject.databaseList[dbName] )  {
-			callback( false, null )
-		}	else	{
-			callback( true, 'cannot connect' )
+		try	{
+			if( mysqlDBJSObject.databaseList[dbName] )  {
+				callback( false, null )
+			}	else	{
+				callback( true, 'cannot connect' )
+			}
+		}	catch( e )	{
+			callback( true, e.sqlMessage )
 		}
 	},
 	insert: ( dbName, table, rowOrRows, callback ) => mysqlDBJSObject.run( dbName, NKSQL.insert( table, rowOrRows ), callback ),
