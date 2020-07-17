@@ -12,7 +12,27 @@ const mysqlDBJSObject = {
 	id: name => objectid( name ),
 	run: ( dbName, sql, callback ) => {
 		if( mysqlDBJSObject.databaseList[dbName] )  {
-			mysqlDBJSObject.databaseList[dbName].query( sql, ( error, results, fields ) => callback( error? []: results ) )
+			mysqlDBJSObject.databaseList[dbName].query( sql, ( error, results, fields ) => {
+				let fieldAliases = []
+				let fieldList = {}
+				for( let i = 0; ( i < results.length ) && ( i < 1 ); i++ )	{
+					for( let x in results[i] )	{
+						fieldAliases.push( x )
+					}
+				}
+				for( let i = 0; i < fields.length; i++ )	{
+					fieldList[fieldAliases[i]] = fields[i].name
+				}
+				for( let i = 0; i < results.length; i++ )	{
+					for( let x in results[i] )	{
+						if( fieldList[x] && ( fieldList[x] != x ) )	{
+							results[i][fieldList[x]] = results[i][x]
+							delete results[i][x]
+						}
+					}
+				}
+				callback( error? []: results )
+			})
 		} else {
 			callback( [] )
 		}
