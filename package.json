@@ -18,7 +18,7 @@
   "homepage": "https://github.com/Encke/NK-MySQL#readme",
   "dependencies": {
     "mysql": "^2.18.1",
-    "@encke/nk-mysql-builder": "1.0.0"
+    "@encke/nk-mysql-builder": "1.0.1"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
