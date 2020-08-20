@@ -1,26 +1,26 @@
-# NK-Mongo
-MongoDB Connection Class for the NK Node Package
+# NK-MySQL
+MySQL Connection Class for the NK Node Package
 
 ## Installation
 
 Install using NPM
 
 ```bash
-npm i nk-mongo --save
+npm i nk-mysql --save
 ```
 ---
 ## How to use
 
-Mongo is the preferred database format for NodeJS based systems. It supports multi-table joins (commonly mistaken as the "weakness" of Mongo). This package will give you one-line access to all common Mongo functions in simple-to-use queries.
+MySQL (MariaDB) is a very popular database system used in many public platforms such as WordPress, Joomla and many more!
 
 ---
 
 ## Connecting
 
-### To connect to a server use NKMongo.start():
+### To connect to a server use NKMySQL.start():
 
 ```
-NKMongo.start( 
+NKMySQL.start( 
   <Database Name>, //String
   <IP>, //String
   <Port>, //Number
@@ -31,13 +31,13 @@ NKMongo.start(
 );
 ```
 
-The **database connection** object is saved in the **NKMongo Object**. Indexed by the database **name**, so there is a caveat to not use the same database name across distinct servers.
+The **database connection** object is saved in the **NKMySQL Object**. Indexed by the database **name**, so there is a caveat to not use the same database name across distinct servers.
 
 Example:
 ```node
-const NKMongo = require( 'nk-mongo' )
+const NKMySQL = require( 'nk-MySQL' )
 
-NKMongo.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError, errorMessage ) => {
+NKMySQL.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError, errorMessage ) => {
   //Super duper awesome code here!
   console.log( isError, errorMessage )
 })
@@ -47,9 +47,9 @@ NKMongo.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError, er
 
 WHAT?! Yes, you can connect to multiple servers in the same core, using them as objects for real-time compliances, for example:
 ```node
-const NKMongo = require( 'nk-mongo' )
+const NKMySQL = require( 'nk-MySQL' )
 
-NKMongo.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError1, errorMessage1 ) => NKMongo.start( 'RemoteDB1', 'remote.mydomain.com', 27017, null, null, null, ( isError2, errorMessage2 ) => NKMongo.start( 'RemoteDB2', 'remote2.mydomain.com', 27017, null, null, null, ( isError3, errorMessage3 ) => {
+NKMySQL.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError1, errorMessage1 ) => NKMySQL.start( 'RemoteDB1', 'remote.mydomain.com', 27017, null, null, null, ( isError2, errorMessage2 ) => NKMySQL.start( 'RemoteDB2', 'remote2.mydomain.com', 27017, null, null, null, ( isError3, errorMessage3 ) => {
   //Even more super duper awesome code here!
   console.log( isError1, errorMessage1, isError2, errorMessage2, isError3, errorMessage3 )
 })))
@@ -58,11 +58,11 @@ NKMongo.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError1, e
 
 ## Common Utility Functions
 
-### To INSERT a new row or a set of rows, use NKMongo.insert():
+### To INSERT a new row or a set of rows, use NKMySQL.insert():
 ```
-NKMongo.insert( 
+NKMySQL.insert( 
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <ROW OR ROWS>, //A single Object to insert one, or an Array of Objects to insert many
   <Callback> //Function
 ) 
@@ -70,7 +70,7 @@ NKMongo.insert(
 
 Example:
 ```node
-NKMongo.insert( 'MyDatabase', 'users', 
+NKMySQL.insert( 'MyDatabase', 'users', 
   { 
     username: 'jose', 
     pass: '123', 
@@ -80,29 +80,29 @@ NKMongo.insert( 'MyDatabase', 'users',
   () => console.log( 'all done' ) )
 ```
 
-### To DELETE rows from the Table, use NKMongo.delete():
+### To DELETE rows from the collection, use NKMySQL.delete():
 ```
-NKMongo.delete(
+NKMySQL.delete(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <DATA TO REMOVE>, //Object
   <Callback> //Function
 )
 ```
 Example:
 ```node
-NKMongo.delete( 'MyDatabase', 'users', 
+NKMySQL.delete( 'MyDatabase', 'users', 
   { 
-    myuser: NKMongo.id( user._id ) 
+    myuser: NKMySQL.id( user._id ) 
   }, 
   () => console.log( 'all done' ) )
 ```
 
-### To UPDATE rows in the Table use NKMongo.update: 
+### To UPDATE rows in the collection use NKMySQL.update: 
 ```
-NKMongo.update(
+NKMySQL.update(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <DATA TO UPDATE>, //Object
   <NEW DATA>, //Object
   <Callback> //Function
@@ -110,7 +110,7 @@ NKMongo.update(
 ```
 Example:
 ```node
-NKMongo.update( 'MyDatabase', 'users', 
+NKMySQL.update( 'MyDatabase', 'users', 
   { 
     active: false 
   }, 
@@ -121,18 +121,18 @@ NKMongo.update( 'MyDatabase', 'users',
 )
 ```
 
-### To QUERY the Table use NKMongo.query():
+### To QUERY the collection use NKMySQL.query():
 ```
-NKMongo.query(
+NKMySQL.query(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <QUERY>, //Object
   <Callback> //Function, Recieves rows from query
 )
 ```
 Example:
 ```node
-NKMongo.query( 'MyDatabase', 'users', 
+NKMySQL.query( 'MyDatabase', 'users', 
   { 
     active: true 
   }, 
@@ -140,11 +140,11 @@ NKMongo.query( 'MyDatabase', 'users',
 )
 ```
 
-### To QUERY with a SORT use NKMongo.querySort:
+### To QUERY with a SORT use NKMySQL.querySort:
 ```
-NKMongo.querySort(
+NKMySQL.querySort(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <SORT BY>, //Object
   <QUERY>, //Object
   <Callback> //Function, Recieves rows from query
@@ -152,18 +152,18 @@ NKMongo.querySort(
 ```
 Example:
 ```node
-NKMongo.querySort( 'MyDatabase', 'users', 
+NKMySQL.querySort( 'MyDatabase', 'users', 
   { added: 1 }, 
   { active: true }, 
 rowsFromQuery => console.log( rowsFromQuery ) )
 ```
 
 
-### To QUERY with a SORT and LIMIT, use NKMongo.queryLimitSort:
+### To QUERY with a SORT and LIMIT, use NKMySQL.queryLimitSort:
 ```
-NKMongo.queryLimitSort(
+NKMySQL.queryLimitSort(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <LIMIT>, //Number
   <SORT BY>, //Object
   <QUERY>, //Object
@@ -172,7 +172,7 @@ NKMongo.queryLimitSort(
 ```
 Example
 ```node
-NKMongo.queryLimitSort( 'MyDatabase', 'users', 
+NKMySQL.queryLimitSort( 'MyDatabase', 'users', 
   100, 
   { added: 1 }, 
   { active: true }, 
@@ -180,41 +180,41 @@ NKMongo.queryLimitSort( 'MyDatabase', 'users',
 )
 ```
 
-### For a SINGLE QUERY the Table use NKMongo.singleQuery():
+### For a SINGLE QUERY the collection use NKMySQL.singleQuery():
 Note: singleQuery should only ever query **ONE ROW**.
 ```
-NKMongo.singleQuery(
+NKMySQL.singleQuery(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <QUERY>, //Object
   <Calback> //Function, Recieves a single row from query.
 );
 ```
 Example:
 ```node
-NKMongo.singleQuery( 'MyDatabase', 'users', 
+NKMySQL.singleQuery( 'MyDatabase', 'users', 
   { 
-    myuser: NKMongo.id( user._id ) 
+    myuser: NKMySQL.id( user._id ) 
   }, 
   rowFromQuery => console.log( rowFromQuery ) 
 )
 ```
 This **singleQuery** is very useful in the authentication methods, e.g.
 ```node
-NKMongo.singleQuery( 'MyDatabase', 'users', 
+NKMySQL.singleQuery( 'MyDatabase', 'users', 
   { loginSessionKey: req.sessionKey }, 
   rowFromQuery => res.json( rowFromQuery? true: false ) 
 )
 ```
 
-### To JOIN a SINGLE Table to another, use NKMongo.join()
+### To JOIN a SINGLE COLLECTION to another, use NKMySQL.join()
 ```
-NKMongo.singleQuery(
+NKMySQL.singleQuery(
   <Database Name>, //String 
-  <Table Name>, //String
-  <Table ID Field>, //String
-  <Name of Table to join to>, //String
-  <ID Field of Table to join to>, //String
+  <Collection Name>, //String
+  <Collection ID Field>, //String
+  <Name of Collection to join to>, //String
+  <ID Field of collection to join to>, //String
   <Join to Element>, //String
   <Sort By>, //Object
   <Query>, // Object
@@ -223,22 +223,22 @@ NKMongo.singleQuery(
 ```
 Example:
 ```node
-NKMongo.join( 'MyDatabase', 'users', 
+NKMySQL.join( 'MyDatabase', 'users', 
   '_id', 
   'photos',
   'user_id', 
   'photos', 
   { added: 1 }, 
-  { myuser: NKMongo.id( user._id ) }, 
+  { myuser: NKMySQL.id( user._id ) }, 
   rowsFromQuery => console.log( rowsFromQuery ) 
 )
 ```
 
-### To QUERY, and perform a LIST of JOINS defined in the query, use NKMongo.joinsLimit():
+### To QUERY, and perform a LIST of JOINS defined in the query, use NKMySQL.joinsLimit():
 ```
-NKMongo.joinsLimit(
+NKMySQL.joinsLimit(
   <Database Name>, //String 
-  <Table Name>, //String
+  <Collection Name>, //String
   <JOINS>, //Array of Objects
   <LIMIT>, //Number
   <SORT BY>, //Object
@@ -253,7 +253,7 @@ const joins = [
   { from: 'history', field: '_id', fromField: 'user_id', as: 'transactions' }
 ];
 
-NKMongo.joinsLimit( 'MyDatabase', 'users', 
+NKMySQL.joinsLimit( 'MyDatabase', 'users', 
   joins, 
   100, 
   { added: 1 }, 
@@ -262,7 +262,6 @@ NKMongo.joinsLimit( 'MyDatabase', 'users',
 )
 ```
 ---
-
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
