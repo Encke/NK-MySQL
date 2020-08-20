@@ -62,7 +62,7 @@ NKMySQL.start( 'MyDatabase', '127.0.0.1', 27017, null, null, null, ( isError1, e
 ```
 NKMySQL.insert( 
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <ROW OR ROWS>, //A single Object to insert one, or an Array of Objects to insert many
   <Callback> //Function
 ) 
@@ -80,11 +80,11 @@ NKMySQL.insert( 'MyDatabase', 'users',
   () => console.log( 'all done' ) )
 ```
 
-### To DELETE rows from the collection, use NKMySQL.delete():
+### To DELETE rows from the Table, use NKMySQL.delete():
 ```
 NKMySQL.delete(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <DATA TO REMOVE>, //Object
   <Callback> //Function
 )
@@ -98,11 +98,11 @@ NKMySQL.delete( 'MyDatabase', 'users',
   () => console.log( 'all done' ) )
 ```
 
-### To UPDATE rows in the collection use NKMySQL.update: 
+### To UPDATE rows in the Table use NKMySQL.update: 
 ```
 NKMySQL.update(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <DATA TO UPDATE>, //Object
   <NEW DATA>, //Object
   <Callback> //Function
@@ -121,11 +121,11 @@ NKMySQL.update( 'MyDatabase', 'users',
 )
 ```
 
-### To QUERY the collection use NKMySQL.query():
+### To QUERY the Table use NKMySQL.query():
 ```
 NKMySQL.query(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <QUERY>, //Object
   <Callback> //Function, Recieves rows from query
 )
@@ -144,7 +144,7 @@ NKMySQL.query( 'MyDatabase', 'users',
 ```
 NKMySQL.querySort(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <SORT BY>, //Object
   <QUERY>, //Object
   <Callback> //Function, Recieves rows from query
@@ -163,7 +163,7 @@ rowsFromQuery => console.log( rowsFromQuery ) )
 ```
 NKMySQL.queryLimitSort(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <LIMIT>, //Number
   <SORT BY>, //Object
   <QUERY>, //Object
@@ -180,12 +180,12 @@ NKMySQL.queryLimitSort( 'MyDatabase', 'users',
 )
 ```
 
-### For a SINGLE QUERY the collection use NKMySQL.singleQuery():
+### For a SINGLE QUERY the Table use NKMySQL.singleQuery():
 Note: singleQuery should only ever query **ONE ROW**.
 ```
 NKMySQL.singleQuery(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <QUERY>, //Object
   <Calback> //Function, Recieves a single row from query.
 );
@@ -207,14 +207,14 @@ NKMySQL.singleQuery( 'MyDatabase', 'users',
 )
 ```
 
-### To JOIN a SINGLE COLLECTION to another, use NKMySQL.join()
+### To JOIN a SINGLE Table to another, use NKMySQL.join()
 ```
 NKMySQL.singleQuery(
   <Database Name>, //String 
-  <Collection Name>, //String
-  <Collection ID Field>, //String
-  <Name of Collection to join to>, //String
-  <ID Field of collection to join to>, //String
+  <Table Name>, //String
+  <Table ID Field>, //String
+  <Name of Table to join to>, //String
+  <ID Field of Table to join to>, //String
   <Join to Element>, //String
   <Sort By>, //Object
   <Query>, // Object
@@ -238,7 +238,7 @@ NKMySQL.join( 'MyDatabase', 'users',
 ```
 NKMySQL.joinsLimit(
   <Database Name>, //String 
-  <Collection Name>, //String
+  <Table Name>, //String
   <JOINS>, //Array of Objects
   <LIMIT>, //Number
   <SORT BY>, //Object
